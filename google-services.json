@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "456178832583",
+    "project_id": "the-nistro",
+    "storage_bucket": "the-nistro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456178832583:android:588d61df8b38ef0564dae2",
+        "android_client_info": {
+          "package_name": "com.example.newnistro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456178832583-j4nqtl8a09ol8k3soj1m5phloh584u73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhFV3NNyekvQUk1hVJc0qStMpC0KxpI6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456178832583-j4nqtl8a09ol8k3soj1m5phloh584u73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
