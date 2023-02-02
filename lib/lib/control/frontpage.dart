@@ -162,6 +162,7 @@ class _frontbuyerState extends State<frontbuyer> {
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {placee = '${place.street} ';
+
       });
     }).catchError((e) {
       debugPrint(e);

@@ -24,7 +24,7 @@ class _firstentryState extends State<firstentry> {
             height: 99,width: 99
             ,child: Image(image: AssetImage( 'assets/a.png' ),fit: BoxFit.cover,)),
         SizedBox(height: 27,),
-        Text(' Seller Mode',style: TextStyle(fontSize: 22,color: Colors.white),),
+        Text(' Seller mode',style: TextStyle(fontSize: 22,color: Colors.white),),
         SizedBox(height: 88,),
         MaterialButton( minWidth: 99,height: 44,
             shape:  Border.all(width: 1,color: Colors.orange),

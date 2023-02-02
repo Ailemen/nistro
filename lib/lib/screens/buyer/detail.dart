@@ -14,5 +14,10 @@ Color  lover = Colors.grey;
 Color  lov = lover;
  String sendings= 'Sending';
 
-String  placee = '';
+String ? placee ;
+
 Position? positionnn;
+
+num? lat ;
+num ? long ;
+String ? adress ;

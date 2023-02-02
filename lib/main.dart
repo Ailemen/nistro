@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:maptest/lib/control/buymain.dart';
 import 'package:maptest/lib/screens/login_screen.dart';
 
 import 'lib/screens/buyer/detail.dart';
@@ -164,7 +165,8 @@ class _MyHomePageState extends State<MyHomePage> {
           'buyernumber': _emailController.text.trim(),
           'lat': positionnn!.latitude,
           'long':positionnn!.longitude,
-          'street':adress.text.trim(),
+          'track':placee,
+          'des':adress.text.trim(),
         }).whenComplete((){ sending ='Send Succesfully';
         Navigator.pop(context);
 

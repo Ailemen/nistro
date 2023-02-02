@@ -18,10 +18,34 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
   //final FirebaseFirestore firestore = FirebaseFirestore.instance;
   void reset() async {
-    try {
+    try {      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(backgroundColor: Colors.transparent,
+            title:
+            Center(child: CircularProgressIndicator(color: Colors.orange,)),
+
+            actions: [
+            ]));
       await  FirebaseAuth.instance.
       sendPasswordResetEmail(email: _emailController.text);
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(backgroundColor: Colors.transparent,
+            title:
+            Center(child: Text('Check your email \nfor reset link')),
+
+            actions: [
+            ]));
     } catch (e) {
+
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(backgroundColor: Colors.white,
+              title:
+              Center(child:Text(e.toString()) ),
+
+              actions: [
+              ]));
       print(e);
     }
   }
@@ -98,7 +122,9 @@ reset();
                         fontSize: 15,
                       )),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: const Text("  Login",
                         style: TextStyle(
                           color: Color(0xff35C2C1),

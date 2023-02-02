@@ -111,6 +111,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const LoginScreen()));
                   } on FirebaseException catch (e) {
+                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(backgroundColor: Colors.white,
+                            title:
+                            Center(child:Text(e.message.toString()) ),
+
+                            actions: [
+                            ]));
                     debugPrint(e.message);
                   }
 
@@ -155,7 +164,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             FontAwesomeIcons.google,
                             // color: Colors.blue,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
                     ),

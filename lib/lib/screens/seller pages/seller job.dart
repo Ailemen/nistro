@@ -64,85 +64,122 @@ void initState() {
                       Color  lover = Colors.white;
                       Color  lov = lover;
 
-                      return   MaterialButton(onPressed: (){
+                      return   Column(
+                        children: [SizedBox(height: 11,),
+                          MaterialButton(
+                            color: Colors.white,
+                            onPressed: (){
 
-                      },
-                        child: Column(
-                          children: [
-                            Card(child: ListTile(title: Row(
-                              children: [Column(
-                                children: [
+                          },
+                            child: Column(
+                              children: [
+                                Card(child: ListTile(title: Row(
+                                  children: [Column(
+                                    children: [
 
-                                ],
-                              ),
-                                SizedBox(width: 29,),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 17,width: 17,child:   Icon(Icons.menu,color:
-                                    CupertinoColors.white,),
-                                      decoration: BoxDecoration( color: Colors.orange,borderRadius: BorderRadius.circular(17)
-                                   ,border: Border.all(width: 1,color: Colors.orange.shade900) ),),
-                                    SizedBox(width: 66,),
-                                    Column(
+                                    ],
+                                  ),
+                                    SizedBox(width: 29,),
+                                    Row(
                                       children: [
-                                        Text(  documentSnapshot['buyernumber']??"",softWrap: true,style:
-                                        TextStyle(color: Colors.blue,fontSize:
-                                        16,fontWeight: FontWeight.bold,),
-                                        ),
-                                        Text(documentSnapshot['buyername']??"",softWrap: true ),
+                                        Container(
+                                          height: 17,width: 17,child:   Icon(Icons.menu,color:
+                                        CupertinoColors.white,),
+                                          decoration: BoxDecoration( color: Colors.orange,borderRadius: BorderRadius.circular(17)
+                                       ,border: Border.all(width: 1,color: Colors.orange.shade900) ),),
+                                        SizedBox(width: 66,),
+                                        Column(
+                                          children: [
+                                            Text(  documentSnapshot['buyernumber']??"",softWrap: true,style:
+                                            TextStyle(color: Colors.blue,fontSize:
+                                            16,fontWeight: FontWeight.bold,),
+                                            ),
+                                            Text(documentSnapshot['buyername']??"",softWrap: true ),
 
-                                        Row(
-                                          children: [  Text('Description:',style:
-                                          TextStyle(color: Colors.deepOrange,fontSize:
-                                          16,fontWeight: FontWeight.bold,),
-                                          ),
-                                            Text(documentSnapshot['street']??"",softWrap: true,
-                                              style:
-                                              TextStyle(color: Colors.blue,fontSize:
-                                              16,fontWeight: FontWeight.bold,),),
+                                            MaterialButton(onPressed: (){
+                                setState(() {
+
+
+                                showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                title: Container(padding: EdgeInsets.all(4),
+
+                                  child: Center(
+                                    child: Text(
+                                    documentSnapshot['des']??"",style:
+                                      TextStyle(color: Colors.deepOrange,fontSize:
+                                    11,fontWeight: FontWeight.bold,),),
+                                  ),
+                                ),
+                                actions: [
+
+
+
+                                ])); });
+                                },
+                                              child: Container(padding: EdgeInsets.all(4),
+                                                child: Center(
+                                                  child: Text('Description:',style:
+                                                  TextStyle(color: Colors.deepOrange,fontSize:
+                                                  11,fontWeight: FontWeight.bold,),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+
                                           ],
                                         ),
+
+                                        SizedBox(height: 44,),
+
+
                                       ],
                                     ),
+                                  ],
+                                )),),
+                                Row(
+                                  children: [    SizedBox(width: 44,),
+                                    MaterialButton(
+                                      onPressed:(){
+                              
+                                       lat =documentSnapshot['lat']??"";
+                                       long =documentSnapshot['long']??"";
+                             adress =documentSnapshot['track']??"";
 
-                                    SizedBox(height: 44,),
+                                      //  print(documentSnapshot['lat']);
 
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>mappager()));
 
+                                    },
+                                      child: Container(
+                                        decoration: BoxDecoration(borderRadius:
+                                        BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.orange.shade800)),
+                                        child: Icon(Icons.location_on_outlined,color:
+                                        Colors.orange.shade800,size: 29),),
+                                    ),
+
+                                    SizedBox(width: 99,),
+                                    MaterialButton(onPressed:(){setState(() {
+                                          data.doc(documentSnapshot.id).delete();
+                                    });},
+                                      child: Container(
+                                        decoration: BoxDecoration(borderRadius:
+                                        BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.orange.shade800)),
+                                        child: Icon(Icons.delete_outlined,color:
+                                        Colors.orange.shade800,size: 29,),),
+                                    ),
                                   ],
                                 ),
-                              ],
-                            )),),
-                            Row(
-                              children: [    SizedBox(width: 44,),
-                                MaterialButton(onPressed:(){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => mappager()));
-                                },
-                                  child: Container(
-                                    decoration: BoxDecoration(borderRadius:
-                                    BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.orange.shade800)),
-                                    child: Icon(Icons.location_on_outlined,color:
-                                    Colors.orange.shade800,size: 29),),
-                                ),
 
-                                SizedBox(width: 99,),
-                                MaterialButton(onPressed:(){setState(() {
-                                      data.doc(documentSnapshot.id).delete();
-                                });},
-                                  child: Container(
-                                    decoration: BoxDecoration(borderRadius:
-                                    BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.orange.shade800)),
-                                    child: Icon(Icons.delete_outlined,color:
-                                    Colors.orange.shade800,size: 29,),),
-                                ),
                               ],
                             ),
-
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     });} else{  return Container();}
 

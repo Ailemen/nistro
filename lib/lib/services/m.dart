@@ -7,10 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:maptest/lib/screens/login_screen.dart';
 import 'package:maptest/lib/widgets/customized_textfield.dart';
 
-import 'lib/screens/buyer/detail.dart';
-import 'lib/screens/buyer/fave.dart';
-import 'lib/widgets/customized_textfield.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

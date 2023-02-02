@@ -187,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _passwordController.text.trim());
                             if (FirebaseAuth.instance.currentUser != null) {
                               ScaffoldMessenger.of(context).showSnackBar
-                                (SnackBar(content: Text('Signed in')));
+                                (SnackBar(content: Text('Signed in ✔')));
                               if (!mounted) return;
                               Navigator.pop(context);
                               await Future.delayed(Duration(seconds: 1));
@@ -302,7 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.pop(context);
                                 await Future.delayed(Duration(seconds: 1));
                               ScaffoldMessenger.of(context).showSnackBar
-                              (SnackBar(content: Text('Signed in')));
+                              (SnackBar(content: Text('Signed in ✔')));
 
                                 Navigator.push(
                                     context,

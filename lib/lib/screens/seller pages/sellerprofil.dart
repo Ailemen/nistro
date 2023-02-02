@@ -19,7 +19,7 @@ import 'package:maptest/lib/widgets/customized_textfield.dart';
 import '../buyer/fave.dart';
 
 class profilepage extends StatefulWidget {
-  const profilepage({Key? key}) : super(key: key);
+ profilepage({Key? key}) : super(key: key);
 
   @override
   State<profilepage> createState() => _profilepageState();
@@ -58,66 +58,44 @@ File imgfilee = File(picturee!.path);
 
 int ne =1;
 int nu =1;
-XFile? picture;
-File imgfile = File(picturee!.path);
-
-
-int neee =1;
-int nuuu =1;
-XFile? pictureee;
-File imgfileee = File(picturee!.path);
 
 
 
-void _createe() async {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  var currentUser = _auth.currentUser;
-  try {
-    await firestore.collection(currentUser!.email.toString()).doc(
-        'kk').update(
-        {     'url': myurlll,
-      }
-
-    );
-  } catch (e) {
-    print(e);
-  }
-}
+final storagee = FirebaseStorage.instance.ref('pic/$picturee').
+child( imgfilee.path);
 
 
 
-
+String Scill = '';
 
 final CollectionReference data = FirebaseFirestore.instance.collection(skills);
 
 class _profilepageState extends State<profilepage> {
 
   @override
+
   void initState() {
     // TODO: implement initState
+    Future.delayed(Duration(seconds: 2)).whenComplete((){
+      setState(() {
+        Scill = skills;
+      });
+    });
+    setState(() {
 
-    _createe();
+    });
+
+   // _createe();
   }
   String sending = 'Sending ....';
   FirebaseStorage storageee = FirebaseStorage.instance;
-  Future <void> uploaddd () async{
-    try{
-      await  storageee.ref('pic/$picturee').child(imgfilee.path).putFile( imgfileee);
-      var dowurl = await storageee.ref().child( imgfilee.path).getDownloadURL().toString();
-      setState(() {
-        dowurl = myurlll;
-      });
 
-    } on fire_core.
-    FirebaseException catch
-    (e) {print(e);}
-  }
-
+  String Scill = '';
 
   final TextEditingController detail = TextEditingController();
 
 
- final storagee = FirebaseStorage.instance.ref('pic/$picturee');
+
   Future <void> uploadd () async{
     try{
       await  storagee.putFile( imgfilee);
@@ -140,29 +118,40 @@ class _profilepageState extends State<profilepage> {
 
 
   FirebaseStorage storage = FirebaseStorage.instance;
-  Future <void> upload () async{
-    try{
-      await  storage.ref('pic/$picture').putFile( imgfile);
-      var dowurl = await storage.ref().getDownloadURL().toString();
-      setState(() {
-        dowurl = myurl;
-      });
-    } on fire_core.
-    FirebaseException catch
-    (e) {print(e);}
-  }
+final TextEditingController detailed = TextEditingController();
   final TextEditingController detaile = TextEditingController();
   final TextEditingController _namee = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+
+  void _createe() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+    try {
+      await firestore.collection(currentUser!.email.toString()).doc(
+          'kk').update(
+          {     'url': myurlll,
+          }
+
+      ).whenComplete((){setState(() {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar
+          (SnackBar(content: Text('Picture Changed')));
+      });}  );
+    } catch (e) {
+      print(e);
+    }
+  }
   void _create() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
     try {
       await firestore.collection(skills).doc(currentUser!.email.toString()
       ).set({
+        'price': detailed.text,
         'phone': detaile.text,
         'name': _passwordController.text,
         'url': myurlll,
@@ -193,7 +182,7 @@ class _profilepageState extends State<profilepage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(width: 444,height: 667,padding: EdgeInsets.all(22),
+      body: Container(width: 444,height: 667,padding: EdgeInsets.all(44),
         color: Colors.grey.shade800,
         child: ListView(children: [
           SizedBox(height: 44,),
@@ -206,10 +195,10 @@ class _profilepageState extends State<profilepage> {
             ],
           ),
           SizedBox(height: 44,),
-           Row(
+         Column(
              children: [
                SizedBox(width: 52,),
-               Container(padding: EdgeInsets.all(22),
+               Container(
                    decoration: BoxDecoration(borderRadius:
                    BorderRadius.circular(11), border: Border.all(width: 9,color: Colors.white)),
                     height: 222,width: 222,child:MaterialButton(onPressed: () async{
@@ -219,6 +208,7 @@ class _profilepageState extends State<profilepage> {
                       source: ImageSource.gallery);
                   setState(()  {
                     picturee = imgee;
+                  //  imgfilee = File(picturee!.path);
                     nu = 2;});
                   setState(() {
                   });
@@ -231,13 +221,31 @@ class _profilepageState extends State<profilepage> {
                 )
                 ), IconButton(onPressed: (){
                   setState(() {
-                upload().whenComplete(() {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            title: Column(
+                              children: [
+                                Center(
+                                  child: CircularProgressIndicator(color:
+                                  Colors.orange,),
+                                ),
+                                Text('Changing Pic')
+                              ],
+                            ),
+                            actions: [
+
+
+
+                            ]));
+                uploadd().whenComplete(() {
                   setState(() {
                     _createe();
                   });
                 });
                   });
-               }, icon: Icon(Icons.upload))
+               }, icon: Icon(Icons.upload,size: 41,color: Colors.grey,))
              ],
            ),
 
@@ -255,12 +263,27 @@ class _profilepageState extends State<profilepage> {
    children: [
      MaterialButton(
                  onPressed: (){
-               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => userskills()));
-             }, child: Text('[Choose Skills]',style: TextStyle(color:
-     Colors.blue,fontSize: 18),)),     SizedBox(width: 11,),
-     Text(skills,style: TextStyle(color:
-     Colors.grey,fontSize: 18),)
+                   setState(() {
+
+
+                     showDialog(
+                         context: context,
+                         builder: (context) => AlertDialog(
+                             backgroundColor: Colors.transparent,
+                             title: Container(height: 411,width:411,
+                                 child: userskills(),),
+                             actions: [
+
+
+
+                             ])); });
+              // Navigator.push(context,
+               //   MaterialPageRoute(builder: (_) => userskills()));
+             }, child: Center(
+               child: Text('           [Choose Skills]',style: TextStyle(color:
+     Colors.blue,fontSize: 18),),
+             )),     SizedBox(width: 11,),
+
 
    ],
  )
@@ -282,7 +305,7 @@ class _profilepageState extends State<profilepage> {
           isPassword: false,
           ),
           SizedBox(height: 11,),
-          Container(height: 55,width: 22,padding: EdgeInsets.only(left: 44,right: 44),
+          Container(height: 55,width: 1,padding: EdgeInsets.only(left: 44,right: 44),
             decoration: BoxDecoration(color: Colors.white,
                 border: Border.all(width: 1,color: Colors.blue),borderRadius:
             BorderRadius.circular(11)),
@@ -293,7 +316,17 @@ class _profilepageState extends State<profilepage> {
               ,keyboardType: TextInputType.phone,),
           ),
 
-
+          SizedBox(height: 22,),
+          Container(height: 55,width: 1,padding: EdgeInsets.only(left: 44,right: 44),
+            decoration: BoxDecoration(color: Colors.white,
+                border: Border.all(width: 1,color: Colors.blue),borderRadius:
+                BorderRadius.circular(11)),
+            child: TextFormField(
+              controller: detailed
+              ,decoration: InputDecoration(hintText:'           Price/hour',
+                fillColor: Colors.grey)
+              ,keyboardType: TextInputType.phone,),
+          ),
           SizedBox(height: 44,),
 
           MaterialButton(
@@ -307,13 +340,24 @@ class _profilepageState extends State<profilepage> {
               showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: Colors.white,
+                      title:Center(
+                        child: Text('Comfirm Profile upload',
+                          style: TextStyle(color:
+                        Colors.black,fontSize: 19),),
+                      ),
+                      actions: [
+            Center(child: ElevatedButton(onPressed: (){
+              Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
                       title: Column(
                         children: [
                           CircularProgressIndicator(color: Colors.orange,),
                           SizedBox(height: 9,),
                           Text(
-                              sendings),
+                              sending),
                         ],
                       ),
                       actions: [
@@ -321,11 +365,18 @@ class _profilepageState extends State<profilepage> {
 
 
                       ]));
-             uploadd().whenComplete((){ setState(() {
-               _create();
-              print(myurll);
+              uploadd().whenComplete((){ setState(() {
+                _create();
+                print(myurll);
 
-             });});
+              });});
+            },
+                      child: Text('Upload',style: TextStyle(color:
+                      Colors.white,fontSize: 11),)))
+
+
+                      ]));
+
           //  _create();
 
          ;}else{ setState(() {

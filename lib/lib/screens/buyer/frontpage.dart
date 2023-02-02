@@ -27,15 +27,10 @@ class frontbuyer extends StatefulWidget {
 }
 
 
-
+String? _currentAddress;
 Position? _currentPosition;
 // anonimouse sign in part
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
-
-
-
-
 final FirebaseFirestore firestoree = FirebaseFirestore.instance;
 void _createe() async {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -147,10 +142,10 @@ class _frontbuyerState extends State<frontbuyer> {
     final hasPermission = await _handleLocationPermission();
 
     if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
-      setState(() => positionnn= position);
-      _getAddressFromLatLng(_currentPosition!);
+      setState(() => positionnn  = position);
+      _getAddressFromLatLng(positionnn!);
     }).catchError((e) {
       debugPrint(e);
     });
@@ -158,10 +153,14 @@ class _frontbuyerState extends State<frontbuyer> {
 
   Future<void> _getAddressFromLatLng(Position position) async {
     await placemarkFromCoordinates(
-        _currentPosition!.latitude, _currentPosition!.longitude)
+       positionnn!.latitude,positionnn!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
-      setState(() {placee = '${place.street} ';
+      setState(() {
+       placee =
+        '${place.street}, ${place.subLocality},\n${place.name},'
+            ' ${place.subAdministrativeArea}, \n'
+            '  ${place.subThoroughfare}';
       });
     }).catchError((e) {
       debugPrint(e);
@@ -169,17 +168,34 @@ class _frontbuyerState extends State<frontbuyer> {
   }
 
 
+  Future<void> addressm() async {
+    await  _getCurrentPosition();
+        _getAddressFromLatLng(positionnn!);
+  }
 
   @override
 
 //inistate for favourites and  annonimouse sgn in
   void initState() {
+    addressm();
     // TODO: implement initState
     super.initState();
   //  _create();
     _createe();
+    print(_currentAddress  );
+
     _getCurrentPosition().whenComplete((){setState(() {
+
+      _getAddressFromLatLng(_currentPosition!).whenComplete(() {
+        print(placee );
+      setState(() {
+
+       // Future.delayed(Duration(seconds:4 )).whenComplete(() =>print(placee) );
+      });
+      print(_currentAddress  );});
+
       print('yessss');
+      print(placee);
       print(positionnn!.longitude);
       print(positionnn!.latitude);
       Future.delayed(Duration(seconds:4 ));
@@ -202,8 +218,13 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
         children: [ Container( height: 88,width: 88,child:
         Image(image: AssetImage( 'assets/a.png' ),
           fit: BoxFit.cover,)),
-          Text('Nistro',style: TextStyle(color: Colors.white,fontSize:
-          22,fontWeight: FontWeight.bold),),
+          Column(
+            children: [
+              Text('Nistro',style: TextStyle(color: Colors.black,fontSize:
+              22,fontWeight: FontWeight.bold),),
+              Text("${skills}s",style: TextStyle(color: Colors.orange,fontSize:14,fontWeight: FontWeight.bold),),
+            ],
+          ),
         ],
       )
       ,backgroundColor: Colors.white,actions:
@@ -241,32 +262,53 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
                               documentSnapshot['url']??''
                           ),fit: BoxFit.cover),borderRadius:
                           BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.white)),),
-                          Row(
-                            children: [
-                          Text(   'Name:' ,style: TextStyle(color: Colors.black),), SizedBox(width: 11,),
-                              Text(documentSnapshot['name']??"",style:
-                              TextStyle(color: Colors.grey,),softWrap: true,),
-                              Text('  , ',style: TextStyle(color: Colors.black,),)
-                             , Row(
-                                children: [
-                                  Text('Location:',style: TextStyle(color: Colors.black,),), SizedBox(width: 11,),
-                                  Text(documentSnapshot['location']??"",style:
-                                  TextStyle(color: Colors.grey),softWrap: true,),
-                                ],
-                              ),
-                            ],
-                          ),
+                          SizedBox(height: 6,),
+                          Container(  padding: EdgeInsets.all(7),   decoration: BoxDecoration(borderRadius:
+                          BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.grey)),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                Container(child: Text(   'Name:' ,style: TextStyle(color: Colors.black),)), SizedBox(width: 11,),
+                                    Text(documentSnapshot['name']??"",style:
+                                    TextStyle(color: Colors.grey,),softWrap: true,),
+                                    Text('  , ',style: TextStyle(color: Colors.black,),)
 
-                          Row(
-                            children: [
-                              Text('Phone: ',style: TextStyle(color: Colors.black,
-                              ),), SizedBox(width: 11,),
-                              Text(documentSnapshot['phone']??"",
-                                style: TextStyle(color:
-                              Colors.grey),),
-                            ],
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      child: Text('Phone: ',style: TextStyle(color: Colors.black,
+                                      ),),
+                                    ), SizedBox(width: 11,),
+                                    Text(documentSnapshot['phone']??"",
+                                      style: TextStyle(color:
+                                      Colors.grey),),
+                                  ],
+                                ),
+
+                                Row(
+                                  children: [
+                                    Container(child: Text('Location:',style: TextStyle(color: Colors.black,),)), SizedBox(width: 11,),
+                                    Text(documentSnapshot['location']??"",style:
+                                    TextStyle(color: Colors.grey),softWrap: true,),
+                                  ],
+                                ),
+
+
+                                Row(
+                                  children: [
+                                    Container(child: Text('Price/hour :₦',style: TextStyle(color: Colors.black,),)), SizedBox(width: 1,),
+                                    Text(documentSnapshot['price']??"",style:
+                                    TextStyle(color: Colors.black),softWrap: true,),
+                                  ],
+                                ),
+
+                              ],
+                            ),
                           ),
-                        Row(
+  Row(
                           children: [
 
 
@@ -378,7 +420,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
                               MaterialButton(onPressed: (){
                                 favee.add({"name":documentSnapshot['name'],"phone":documentSnapshot['phone']},);
                                 Fluttertoast.showToast(
-                                    msg: "Fav added",
+                                    msg: "Fav added ❤️❤",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.SNACKBAR,
                                     timeInSecForIosWeb: 1,

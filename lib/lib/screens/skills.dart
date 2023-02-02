@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:maptest/lib/control/sellerprofil.dart';
 import 'package:maptest/lib/screens/buyer/frontpage.dart';
+import 'package:maptest/lib/screens/seller%20pages/sellerprofil.dart';
 
 
 import 'buyer/detail.dart';
@@ -36,18 +38,25 @@ class _userskillsState extends State<userskills> {
                   Color  lover = Colors.white;
                   Color  lov = lover;
 
-                  return   MaterialButton(onPressed: (){ setState(() {
-                    skills=documentSnapshot['skill']??"";
+                  return   Container(   decoration: BoxDecoration(borderRadius:
+                  BorderRadius.circular(11), border: Border.all(width: 1,color: Colors.white)),
+                    child: MaterialButton(onPressed: (){ setState(() {
+                      skills = documentSnapshot['skill']??"";
+
         ScaffoldMessenger.of(context).showSnackBar
-        (SnackBar(content: Text(skills)));},
-                  ); },
-                    child: Card(child: ListTile(title: Row(
-                      children: [ Text(documentSnapshot['skill']??"" ),
+        (SnackBar(
+            duration: Duration(seconds: 7)
+            ,content: Text(  " $skills  Mode Activated ")));},
+                    );
+                    Navigator.pop(context);},
+                      child: Card(child: ListTile(title: Row(
+                        children: [ Text(documentSnapshot['skill']??"" ),
 
 
 
-                      ],
-                    )),),
+                        ],
+                      )),),
+                    ),
                   );
                 });} else{  return Container();}
 

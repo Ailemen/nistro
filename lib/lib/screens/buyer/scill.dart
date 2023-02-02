@@ -18,7 +18,9 @@ class _scillserState extends State<scillser> {
   @override
   final CollectionReference data = FirebaseFirestore.instance.collection('nistroskills');
   Widget build(BuildContext context) {
-    return   Scaffold(body:
+    return   Scaffold(
+        backgroundColor: Colors.grey.shade500
+        ,body:
     StreamBuilder(
         stream:  data.snapshots(),
         builder: (context,
@@ -37,24 +39,34 @@ class _scillserState extends State<scillser> {
                   Color  lover = Colors.white;
                   Color  lov = lover;
 
-                  return   MaterialButton(onPressed: () {
+                  return   Column(
+                    children: [ SizedBox(height: 7,),
+                      Container(
+                        decoration: BoxDecoration(borderRadius:
+                        BorderRadius.circular(11), border: Border.all(width: 2,color: Colors.orange)),
+                        child: MaterialButton(onPressed: () {
 
-                  setState(() {
-                    skills = documentSnapshot['skill']??"";
+                        setState(() {
+                          skills = documentSnapshot['skill']??"";
 
-                  });
+                        });
 
                  Future.delayed(Duration(seconds: 2));
 
-                  ScaffoldMessenger.of(context).showSnackBar
-                    (SnackBar(content: Text(skills)));},
-                    child: Card(child: ListTile(title: Row(
-                      children: [ Text(documentSnapshot['skill']??"" ),
+                        ScaffoldMessenger.of(context).showSnackBar
+                          (SnackBar(content: Text(skills)));},
+                          child: Card(child: ListTile(title: Row(
+                            children: [ Text(documentSnapshot['skill']??""
+                              ,style:
+                              TextStyle(color: Colors.grey.shade500,),),
 
 
 
-                      ],
-                    )),),
+                            ],
+                          )),),
+                        ),
+                      ),
+                    ],
                   );
                 });} else{  return Container();}
 

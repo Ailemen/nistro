@@ -52,9 +52,9 @@ class _favouriteState extends State<favourite> {
                     return   Column(
                       children: [
                         Card(child: ListTile(
-                          title:  Text(documentSnapshot['phone']??""
-                            ,style: TextStyle(color: Colors.blue,fontSize: 11),),
-                          subtitle: Row(children: [ Text(documentSnapshot['name']??""
+                          title:  Text(documentSnapshot['name']??""
+                            ,style: TextStyle(color: Colors.blue,fontSize: 14),),
+                          subtitle: Row(children: [ Text(documentSnapshot['phone']??""
                    )
                             ,SizedBox(width: 99,),
                           ],),
